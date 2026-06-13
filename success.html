@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitribe - Connected!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f0f0f;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
+        .success-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+            font-size: 1.5em;
+            margin-bottom: 8px;
+        }
+        .name {
+            color: #FC4C02;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .stats {
+            background: #0f0f0f;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .stat-row:last-child { border-bottom: none; }
+        .stat-label { color: #888; }
+        .stat-value { font-weight: 600; }
+        .message {
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: #FC4C02;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .back-btn:hover { background: #E34402; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="success-icon">🎉</div>
+        <h1>You're Connected!</h1>
+        <div class="name" id="participant-name"></div>
+
+        <div class="stats">
+            <div class="stat-row">
+                <span class="stat-label">Running</span>
+                <span class="stat-value" id="run-dist">--</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Cycling</span>
+                <span class="stat-value" id="ride-dist">--</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Total Distance</span>
+                <span class="stat-value" id="total-dist">--</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">Activities</span>
+                <span class="stat-value" id="activities">--</span>
+            </div>
+        </div>
+
+        <p class="message">
+            Your Strava is now linked to the Fitribe Challenge leaderboard.
+            Your distances will update automatically from now on! 🏃‍♂️🚴
+        </p>
+
+        <a href="index.html" class="back-btn">View Leaderboard</a>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('participant-name').textContent = params.get('name') || 'Athlete';
+        document.getElementById('run-dist').textContent = (params.get('run') || '0') + ' km';
+        document.getElementById('ride-dist').textContent = (params.get('ride') || '0') + ' km';
+        document.getElementById('total-dist').textContent = (params.get('total') || '0') + ' km';
+        document.getElementById('activities').textContent = params.get('activities') || '0';
+    </script>
+</body>
+</html>

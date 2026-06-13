@@ -1,0 +1,8 @@
+tokens.json
+authorize_and_fetch.py
+exchange_codes.py
+fetch_strava_data.py
+update_leaderboard.py
+serve.py
+fitribe-logo-light.png
+.vercel
