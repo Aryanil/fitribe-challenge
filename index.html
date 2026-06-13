@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitribe June Challenge - Leaderboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FC4C02;
+            --primary-dark: #E34402;
+            --cycling: #2196F3;
+            --running: #4CAF50;
+            --double: #9C27B0;
+            --bg: #0f0f0f;
+            --card-bg: #1a1a1a;
+            --card-border: #2a2a2a;
+            --text: #ffffff;
+            --text-muted: #888888;
+            --gold: #FFD700;
+            --silver: #C0C0C0;
+            --bronze: #CD7F32;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #fdf6f0 0%, #fff5eb 50%, #fef0e4 100%);
+            border-radius: 20px;
+            border: 1px solid #f0e0d0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--running), var(--primary), var(--cycling));
+        }
+
+        .header-logo {
+            width: 220px;
+            margin: 0 auto 15px;
+            display: block;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--primary), #ff8a50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: #1a1a4e;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .challenge-period {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 20px;
+            background: rgba(252, 76, 2, 0.1);
+            border: 1px solid rgba(252, 76, 2, 0.4);
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-card .stat-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-card .stat-label {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+            background: var(--card-bg);
+            color: var(--text-muted);
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            border-color: var(--primary);
+            color: var(--text);
+        }
+
+        .tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .tab .tab-count {
+            display: inline-block;
+            margin-left: 6px;
+            padding: 2px 8px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            font-size: 0.8em;
+        }
+
+        /* Leaderboard */
+        .leaderboard {
+            display: none;
+        }
+
+        .leaderboard.active {
+            display: block;
+        }
+
+        .leaderboard-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .leaderboard-header {
+            display: grid;
+            grid-template-columns: 60px 1fr 150px 150px 120px;
+            padding: 15px 20px;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .participant-row {
+            display: grid;
+            grid-template-columns: 60px 1fr 150px 150px 120px;
+            padding: 18px 20px;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+            transition: background 0.2s ease;
+        }
+
+        .participant-row:last-child {
+            border-bottom: none;
+        }
+
+        .participant-row:hover {
+            background: rgba(252, 76, 2, 0.05);
+        }
+
+        .rank {
+            font-size: 1.3em;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .rank-1 { color: var(--gold); }
+        .rank-2 { color: var(--silver); }
+        .rank-3 { color: var(--bronze); }
+
+        .rank-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            font-size: 1.1em;
+        }
+
+        .rank-1 .rank-badge { background: rgba(255, 215, 0, 0.15); }
+        .rank-2 .rank-badge { background: rgba(192, 192, 192, 0.15); }
+        .rank-3 .rank-badge { background: rgba(205, 127, 50, 0.15); }
+
+        .participant-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .participant-name {
+            font-weight: 600;
+            font-size: 1em;
+        }
+
+        .participant-target {
+            font-size: 0.8em;
+            color: var(--text-muted);
+        }
+
+        .distance {
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .progress-cell {
+            padding-right: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #2a2a2a;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-fill.running { background: linear-gradient(90deg, var(--running), #81C784); }
+        .progress-fill.cycling { background: linear-gradient(90deg, var(--cycling), #64B5F6); }
+        .progress-fill.double { background: linear-gradient(90deg, var(--double), #BA68C8); }
+
+        .progress-text {
+            font-size: 0.75em;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .strava-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.85em;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .strava-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+
+            .leaderboard-header {
+                display: none;
+            }
+
+            .participant-row {
+                grid-template-columns: 40px 1fr;
+                gap: 10px;
+                padding: 15px;
+            }
+
+            .participant-row .distance,
+            .participant-row .progress-cell,
+            .participant-row .strava-link-cell {
+                grid-column: 2;
+            }
+
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Last updated */
+        .last-updated {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85em;
+            margin-top: 30px;
+            padding: 15px;
+        }
+
+        .refresh-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85em;
+            margin-left: 10px;
+            transition: background 0.2s;
+        }
+
+        .refresh-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Loading state */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--card-border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 0.85em;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .strava-powered {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            opacity: 0.7;
+        }
+
+        /* Connect Strava Section */
+        .connect-section {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .connect-section h3 {
+            font-size: 1.2em;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .connect-section p {
+            color: var(--text-muted);
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        .connect-section select {
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.95em;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .connect-btn {
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .connect-btn:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <img src="fitribe-logo.png" alt="Fitribe" class="header-logo">
+            <h1>June Challenge 2026</h1>
+            <p>Run. Ride. Conquer.</p>
+            <div class="challenge-period">June 1 - June 30, 2026</div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-value" id="total-participants">11</div>
+                <div class="stat-label">Participants</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="total-distance">--</div>
+                <div class="stat-label">Total KM Covered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="total-activities">--</div>
+                <div class="stat-label">Activities Logged</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="days-remaining">--</div>
+                <div class="stat-label">Days Remaining</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('all')">All <span class="tab-count">11</span></div>
+            <div class="tab" onclick="switchTab('running')">Running <span class="tab-count">8</span></div>
+            <div class="tab" onclick="switchTab('cycling')">Cycling <span class="tab-count">1</span></div>
+            <div class="tab" onclick="switchTab('double')">Double Trouble <span class="tab-count">2</span></div>
+        </div>
+
+        <!-- Leaderboard: All -->
+        <div class="leaderboard active" id="leaderboard-all">
+            <div class="leaderboard-card">
+                <div class="leaderboard-header">
+                    <span>Rank</span>
+                    <span>Participant</span>
+                    <span>Distance</span>
+                    <span>Progress</span>
+                    <span>Strava</span>
+                </div>
+                <div id="rows-all"></div>
+            </div>
+        </div>
+
+        <!-- Leaderboard: Running -->
+        <div class="leaderboard" id="leaderboard-running">
+            <div class="leaderboard-card">
+                <div class="leaderboard-header">
+                    <span>Rank</span>
+                    <span>Participant</span>
+                    <span>Distance</span>
+                    <span>Progress</span>
+                    <span>Strava</span>
+                </div>
+                <div id="rows-running"></div>
+            </div>
+        </div>
+
+        <!-- Leaderboard: Cycling -->
+        <div class="leaderboard" id="leaderboard-cycling">
+            <div class="leaderboard-card">
+                <div class="leaderboard-header">
+                    <span>Rank</span>
+                    <span>Participant</span>
+                    <span>Distance</span>
+                    <span>Progress</span>
+                    <span>Strava</span>
+                </div>
+                <div id="rows-cycling"></div>
+            </div>
+        </div>
+
+        <!-- Leaderboard: Double Trouble -->
+        <div class="leaderboard" id="leaderboard-double">
+            <div class="leaderboard-card">
+                <div class="leaderboard-header">
+                    <span>Rank</span>
+                    <span>Participant</span>
+                    <span>Distance</span>
+                    <span>Progress</span>
+                    <span>Strava</span>
+                </div>
+                <div id="rows-double"></div>
+            </div>
+        </div>
+
+        <!-- Last Updated -->
+        <div class="last-updated">
+            Last updated: <span id="last-updated-time">--</span>
+            <button class="refresh-btn" onclick="loadData()">Refresh</button>
+        </div>
+
+        <!-- Connect Strava Section -->
+        <div class="connect-section" id="connect-section">
+            <h3>Connect Your Strava</h3>
+            <p>Participants: click below to authorize your Strava account for the leaderboard</p>
+            <select id="participant-select">
+                <option value="">-- Select your name --</option>
+            </select>
+            <button class="connect-btn" onclick="connectStrava()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
+                </svg>
+                Connect with Strava
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Powered by <a href="https://www.strava.com/clubs/1656153" target="_blank">Fitribe Strava Club</a></p>
+            <div class="strava-powered">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--primary)">
+                    <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
+                </svg>
+                Strava Powered
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // PARTICIPANT DATA FROM GOOGLE SHEET
+        // ============================================
+        const participants = [
+            {
+                name: "Pankaj Arora",
+                gender: "Male",
+                challenge: "cycling",
+                targetKm: 1000,
+                targetLabel: "Everest Challenge - 1000 KM",
+                stravaLink: "https://strava.app.link/aPPhuQKVt3b",
+                stravaId: null, // Will be populated after OAuth
+                distanceCovered: 0,
+            },
+            {
+                name: "Ashmeta S Sahu",
+                gender: "Female",
+                challenge: "double",
+                targetKm: 150, // 50km run + 100km cycle
+                targetLabel: "50KM Run + 100KM Cycle",
+                stravaLink: "https://www.strava.com/athletes/ashmita_sahu",
+                stravaId: null,
+                distanceCovered: 0,
+                runDistance: 0,
+                rideDistance: 0,
+            },
+            {
+                name: "Dhvani Arora",
+                gender: "Female",
+                challenge: "running",
+                targetKm: 50,
+                targetLabel: "Chembra Peak - 50 KM",
+                stravaLink: "https://strava.app.link/7MrlQWVHA3b",
+                stravaId: null,
+                distanceCovered: 0,
+            },
+            {
+                name: "Janvi Arora",
+                gender: "Female",
+                challenge: "running",
+                targetKm: 50,
+                targetLabel: "Chembra Peak - 50 KM",
+                stravaLink: "https://strava.app.link/JLJgbADQA3b",
+                stravaId: null,
+                distanceCovered: 0,
+            },
+            {
+                name: "Arun Kumar",
+                gender: "Male",
+                challenge: "double",
+                targetKm: 250, // 50km run + 200km cycle
+                targetLabel: "K2 Challenge - 50KM Run + 200KM Cycle",
+                stravaLink: "https://strava.app.link/BqS0BVOUA3b",
+                stravaId: null,
+                distanceCovered: 0,
+                runDistance: 0,
+                rideDistance: 0,
+            },
+            {
+                name: "Anupama Bankapur",
+                gender: "Female",
+                challenge: "running",
+                targetKm: 50,
+                targetLabel: "Chembra Peak - 50 KM",
+                stravaLink: "https://strava.app.link/Hxk6y27JB3b",
+                stravaId: null,
+                distanceCovered: 0,
+            },
+            {
+                name: "Narayanan Saranyan",
+                gender: "Male",
+                challenge: "running",
+                targetKm: 30,
+                targetLabel: "30 KM",
+                stravaLink: "https://strava.app.link/iI0VxfMsC3b",
+                stravaId: null,
+                distanceCovered: 0,
+            },
+            {
+                name: "Vandana Wadhawan",
+                gender: "Female",
+                challenge: "running",
+                targetKm: 30,
+                targetLabel: "Nandi Hills - 30 KM",
+                stravaLink: "https://strava.app.link/HTLL1a7DF3b",
+                stravaId: null,
+                distanceCovered: 0,
+            },
+            {
+                name: "Gaurav Goyal",
+                gender: "Male",
+                challenge: "running",
+                targetKm: 100,
+                targetLabel: "Anamudi - 100 KM",
+                stravaLink: "https://strava.app.link/64AVrsXcH3b",
+                stravaId: null,
+                distanceCovered: 0,
+            },
+            {
+                name: "Deep Sanghani",
+                gender: "Male",
+                challenge: "running",
+                targetKm: 100,
+                targetLabel: "Anamudi - 100 KM",
+                stravaLink: "https://strava.app.link/buO9WFuSJ3b",
+                stravaId: null,
+                distanceCovered: 0,
+            },
+            {
+                name: "Tashif",
+                gender: "Male",
+                challenge: "running",
+                targetKm: 50,
+                targetLabel: "Chembra Peak - 50 KM",
+                stravaLink: "https://strava.app.link/OY7JYRxjR3b",
+                stravaId: null,
+                distanceCovered: 0,
+            },
+        ];
+
+        // ============================================
+        // STRAVA API CONFIGURATION
+        // ============================================
+        const STRAVA_CONFIG = {
+            clientId: '257821',
+            redirectUri: 'https://aryanil.github.io/fitribe-challenge/callback.html',
+            scope: 'read,activity:read',
+        };
+
+        // ============================================
+        // DASHBOARD LOGIC
+        // ============================================
+
+        function switchTab(tab) {
+            // Update tab active states
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.closest('.tab').classList.add('active');
+
+            // Show correct leaderboard
+            document.querySelectorAll('.leaderboard').forEach(l => l.classList.remove('active'));
+            document.getElementById(`leaderboard-${tab}`).classList.add('active');
+        }
+
+        function createParticipantRow(participant, rank, challengeType) {
+            const progressPercent = Math.min(100, (participant.distanceCovered / participant.targetKm) * 100);
+            const rankClass = rank <= 3 ? `rank-${rank}` : '';
+
+            let distanceDisplay = `${participant.distanceCovered.toFixed(1)} km`;
+            if (challengeType === 'double') {
+                distanceDisplay = `${(participant.runDistance || 0).toFixed(1)} + ${(participant.rideDistance || 0).toFixed(1)} km`;
+            }
+
+            return `
+                <div class="participant-row">
+                    <div class="rank ${rankClass}">
+                        <div class="rank-badge">${rank <= 3 ? ['&#127942;', '&#129352;', '&#129353;'][rank-1] : rank}</div>
+                    </div>
+                    <div class="participant-info">
+                        <div class="participant-name">${participant.name}</div>
+                        <div class="participant-target">Target: ${participant.targetLabel}</div>
+                    </div>
+                    <div class="distance">${distanceDisplay}</div>
+                    <div class="progress-cell">
+                        <div class="progress-bar">
+                            <div class="progress-fill ${challengeType || participant.challenge}" style="width: ${progressPercent}%"></div>
+                        </div>
+                        <div class="progress-text">${progressPercent.toFixed(0)}% of target</div>
+                    </div>
+                    <div>
+                        <a href="${participant.stravaLink}" target="_blank" class="strava-link">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
+                            </svg>
+                            Profile
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderLeaderboards() {
+            // Sort all participants by distance (descending)
+            const allSorted = [...participants].sort((a, b) => b.distanceCovered - a.distanceCovered);
+            const runningSorted = participants.filter(p => p.challenge === 'running').sort((a, b) => b.distanceCovered - a.distanceCovered);
+            const cyclingSorted = participants.filter(p => p.challenge === 'cycling').sort((a, b) => b.distanceCovered - a.distanceCovered);
+            const doubleSorted = participants.filter(p => p.challenge === 'double').sort((a, b) => b.distanceCovered - a.distanceCovered);
+
+            // Render All
+            document.getElementById('rows-all').innerHTML = allSorted
+                .map((p, i) => createParticipantRow(p, i + 1)).join('');
+
+            // Render Running
+            document.getElementById('rows-running').innerHTML = runningSorted
+                .map((p, i) => createParticipantRow(p, i + 1, 'running')).join('');
+
+            // Render Cycling
+            document.getElementById('rows-cycling').innerHTML = cyclingSorted
+                .map((p, i) => createParticipantRow(p, i + 1, 'cycling')).join('');
+
+            // Render Double Trouble
+            document.getElementById('rows-double').innerHTML = doubleSorted
+                .map((p, i) => createParticipantRow(p, i + 1, 'double')).join('');
+
+            // Update stats
+            const totalDistance = participants.reduce((sum, p) => sum + p.distanceCovered, 0);
+            document.getElementById('total-distance').textContent = totalDistance.toFixed(1);
+
+            // Days remaining
+            const now = new Date();
+            const endDate = new Date('2026-06-30');
+            const daysRemaining = Math.max(0, Math.ceil((endDate - now) / (1000 * 60 * 60 * 24)));
+            document.getElementById('days-remaining').textContent = daysRemaining;
+
+            // Update time
+            document.getElementById('last-updated-time').textContent = new Date().toLocaleString();
+        }
+
+        // ============================================
+        // DATA LOADING
+        // Load from localStorage (cached Strava data)
+        // or from the data.json file generated by the
+        // backend script
+        // ============================================
+
+        async function loadData() {
+            // Try loading from data.json (generated by backend script)
+            try {
+                const response = await fetch('data.json?t=' + Date.now());
+                if (response.ok) {
+                    const data = await response.json();
+                    data.forEach(entry => {
+                        const participant = participants.find(p => p.name === entry.name);
+                        if (participant) {
+                            participant.distanceCovered = entry.distanceCovered || 0;
+                            if (participant.challenge === 'double') {
+                                participant.runDistance = entry.runDistance || 0;
+                                participant.rideDistance = entry.rideDistance || 0;
+                            }
+                        }
+                    });
+                    const totalActivities = data.reduce((sum, e) => sum + (e.activities || 0), 0);
+                    document.getElementById('total-activities').textContent = totalActivities;
+                }
+            } catch (e) {
+                console.log('No data.json found, using default values. Run fetch_strava_data.py to populate.');
+            }
+
+            // Also check localStorage for manual updates
+            const stored = localStorage.getItem('fitribe-distances');
+            if (stored) {
+                const distances = JSON.parse(stored);
+                distances.forEach(entry => {
+                    const participant = participants.find(p => p.name === entry.name);
+                    if (participant) {
+                        participant.distanceCovered = entry.distanceCovered || participant.distanceCovered;
+                        if (participant.challenge === 'double') {
+                            participant.runDistance = entry.runDistance || participant.runDistance;
+                            participant.rideDistance = entry.rideDistance || participant.rideDistance;
+                        }
+                    }
+                });
+            }
+
+            renderLeaderboards();
+        }
+
+        // ============================================
+        // MANUAL DATA ENTRY (for testing / fallback)
+        // ============================================
+        function openManualEntry() {
+            const modal = document.createElement('div');
+            modal.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;';
+            modal.innerHTML = `
+                <div style="background:#1a1a1a;border-radius:16px;padding:30px;max-width:500px;width:100%;max-height:80vh;overflow-y:auto;">
+                    <h2 style="margin-bottom:20px;color:#FC4C02;">Manual Distance Entry</h2>
+                    <p style="color:#888;margin-bottom:20px;font-size:0.9em;">Update distances manually (in km). This is saved locally.</p>
+                    ${participants.map(p => `
+                        <div style="margin-bottom:15px;">
+                            <label style="display:block;margin-bottom:5px;font-weight:500;">${p.name} <span style="color:#888;font-size:0.8em;">(${p.challenge})</span></label>
+                            ${p.challenge === 'double' ? `
+                                <div style="display:flex;gap:10px;">
+                                    <input type="number" id="run-${p.name}" value="${p.runDistance || 0}" placeholder="Run km" style="flex:1;padding:8px;border-radius:6px;border:1px solid #333;background:#0f0f0f;color:white;">
+                                    <input type="number" id="ride-${p.name}" value="${p.rideDistance || 0}" placeholder="Ride km" style="flex:1;padding:8px;border-radius:6px;border:1px solid #333;background:#0f0f0f;color:white;">
+                                </div>
+                            ` : `
+                                <input type="number" id="dist-${p.name}" value="${p.distanceCovered}" placeholder="Distance in km" style="width:100%;padding:8px;border-radius:6px;border:1px solid #333;background:#0f0f0f;color:white;">
+                            `}
+                        </div>
+                    `).join('')}
+                    <div style="display:flex;gap:10px;margin-top:20px;">
+                        <button onclick="saveManualEntry()" style="flex:1;padding:12px;background:#FC4C02;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;">Save</button>
+                        <button onclick="this.closest('div[style*=fixed]').remove()" style="flex:1;padding:12px;background:#333;color:white;border:none;border-radius:8px;cursor:pointer;">Cancel</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function saveManualEntry() {
+            const distances = participants.map(p => {
+                if (p.challenge === 'double') {
+                    const run = parseFloat(document.getElementById(`run-${p.name}`).value) || 0;
+                    const ride = parseFloat(document.getElementById(`ride-${p.name}`).value) || 0;
+                    return { name: p.name, runDistance: run, rideDistance: ride, distanceCovered: run + ride };
+                } else {
+                    const dist = parseFloat(document.getElementById(`dist-${p.name}`).value) || 0;
+                    return { name: p.name, distanceCovered: dist };
+                }
+            });
+
+            localStorage.setItem('fitribe-distances', JSON.stringify(distances));
+            document.querySelector('div[style*="fixed"]').remove();
+            loadData();
+        }
+
+        // Add keyboard shortcut for manual entry (press 'M')
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'm' || e.key === 'M') {
+                if (e.target.tagName !== 'INPUT') openManualEntry();
+            }
+        });
+
+        // ============================================
+        // STRAVA CONNECT (for participants to self-authorize)
+        // ============================================
+        function initConnectSection() {
+            const select = document.getElementById('participant-select');
+            participants.forEach(p => {
+                const option = document.createElement('option');
+                option.value = p.name;
+                option.textContent = `${p.name} (${p.challenge})`;
+                select.appendChild(option);
+            });
+        }
+
+        function connectStrava() {
+            const select = document.getElementById('participant-select');
+            const name = select.value;
+            if (!name) {
+                alert('Please select your name first!');
+                return;
+            }
+            const params = new URLSearchParams({
+                client_id: STRAVA_CONFIG.clientId,
+                response_type: 'code',
+                redirect_uri: STRAVA_CONFIG.redirectUri,
+                scope: STRAVA_CONFIG.scope,
+                state: name,
+                approval_prompt: 'auto',
+            });
+            window.location.href = `https://www.strava.com/oauth/authorize?${params.toString()}`;
+        }
+
+        // Initialize
+        loadData();
+        initConnectSection();
+    </script>
+</body>
+</html>
