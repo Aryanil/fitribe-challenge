@@ -82,6 +82,9 @@
         <div class="success-icon">🎉</div>
         <h1>You're Connected!</h1>
         <div class="name" id="participant-name"></div>
+        <div style="color:#888; font-size:0.85em; margin-bottom:15px;">
+            Strava account: <strong id="strava-athlete" style="color:#fff;"></strong>
+        </div>
 
         <div class="stats">
             <div class="stat-row">
@@ -113,6 +116,7 @@
     <script>
         const params = new URLSearchParams(window.location.search);
         document.getElementById('participant-name').textContent = params.get('name') || 'Athlete';
+        document.getElementById('strava-athlete').textContent = params.get('athlete') || '';
         document.getElementById('run-dist').textContent = (params.get('run') || '0') + ' km';
         document.getElementById('ride-dist').textContent = (params.get('ride') || '0') + ' km';
         document.getElementById('total-dist').textContent = (params.get('total') || '0') + ' km';

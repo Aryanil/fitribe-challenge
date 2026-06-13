@@ -29,10 +29,10 @@
   },
   {
     "name": "Arun Kumar",
-    "distanceCovered": 176.44,
-    "runDistance": 35.55,
-    "rideDistance": 140.89,
-    "activities": 12
+    "distanceCovered": 0,
+    "runDistance": 0,
+    "rideDistance": 0,
+    "activities": 0
   },
   {
     "name": "Anupama Bankapur",
@@ -78,9 +78,9 @@
   },
   {
     "name": "Anil Yaduvanshi",
-    "distanceCovered": 0,
-    "runDistance": 0,
-    "rideDistance": 0,
-    "activities": 0
+    "distanceCovered": 176.44,
+    "runDistance": 35.55,
+    "rideDistance": 140.89,
+    "activities": 12
   }
 ]

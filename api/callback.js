@@ -120,6 +120,7 @@ export default async function handler(req, res) {
     // Redirect to success page
     const params = new URLSearchParams({
       name: participantName,
+      athlete: athleteName,
       run: runDistance.toFixed(1),
       ride: rideDistance.toFixed(1),
       total: totalDistance.toFixed(1),

@@ -440,6 +440,17 @@
         .connect-btn:hover {
             background: var(--primary-dark);
         }
+
+        .connect-warning {
+            background: rgba(255, 167, 38, 0.1);
+            border: 1px solid rgba(255, 167, 38, 0.3);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            font-size: 0.85em;
+            color: #FFA726;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
@@ -546,6 +557,10 @@
         <div class="connect-section" id="connect-section">
             <h3>Connect Your Strava</h3>
             <p>Participants: click below to authorize your Strava account for the leaderboard</p>
+            <div class="connect-warning">
+                ⚠️ Make sure you are logged into <strong>YOUR OWN</strong> Strava account before clicking Connect.
+                <br>Check at <a href="https://www.strava.com" target="_blank" style="color:#FC4C02;">strava.com</a> first.
+            </div>
             <select id="participant-select">
                 <option value="">-- Select your name --</option>
             </select>
