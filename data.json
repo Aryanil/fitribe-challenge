@@ -82,5 +82,26 @@
     "runDistance": 35.55,
     "rideDistance": 140.89,
     "activities": 12
+  },
+  {
+    "name": "Pradhyumn Jain",
+    "distanceCovered": 0,
+    "runDistance": 0,
+    "rideDistance": 0,
+    "activities": 0
+  },
+  {
+    "name": "Prachi Yadav",
+    "distanceCovered": 0,
+    "runDistance": 0,
+    "rideDistance": 0,
+    "activities": 0
+  },
+  {
+    "name": "Anukulya Panda",
+    "distanceCovered": 0,
+    "runDistance": 0,
+    "rideDistance": 0,
+    "activities": 0
   }
 ]
