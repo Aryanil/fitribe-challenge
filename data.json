@@ -3,6 +3,7 @@
     "name": "Pankaj Arora",
     "distanceCovered": 437.39,
     "runDistance": 0,
+    "walkDistance": 0,
     "rideDistance": 437.39,
     "activities": 5
   },
@@ -10,6 +11,7 @@
     "name": "Ashmeta S Sahu",
     "distanceCovered": 158.7,
     "runDistance": 52.68,
+    "walkDistance": 0,
     "rideDistance": 106.02,
     "activities": 12
   },
@@ -17,6 +19,7 @@
     "name": "Dhvani Arora",
     "distanceCovered": 0,
     "runDistance": 0,
+    "walkDistance": 0,
     "rideDistance": 0,
     "activities": 0
   },
@@ -24,6 +27,7 @@
     "name": "Janvi Arora",
     "distanceCovered": 37.8,
     "runDistance": 37.8,
+    "walkDistance": 0,
     "rideDistance": 0,
     "activities": 7
   },
@@ -31,6 +35,7 @@
     "name": "Arun Kumar",
     "distanceCovered": 180.57,
     "runDistance": 70.69,
+    "walkDistance": 0,
     "rideDistance": 109.88,
     "activities": 10
   },
@@ -38,6 +43,7 @@
     "name": "Anupama Bankapur",
     "distanceCovered": 22.11,
     "runDistance": 22.11,
+    "walkDistance": 0,
     "rideDistance": 0,
     "activities": 3
   },
@@ -45,6 +51,7 @@
     "name": "Narayanan Saranyan",
     "distanceCovered": 0,
     "runDistance": 0,
+    "walkDistance": 0,
     "rideDistance": 0,
     "activities": 0
   },
@@ -52,6 +59,7 @@
     "name": "Vandana Wadhawan",
     "distanceCovered": 0,
     "runDistance": 0,
+    "walkDistance": 0,
     "rideDistance": 0,
     "activities": 0
   },
@@ -59,6 +67,7 @@
     "name": "Gaurav Goyal",
     "distanceCovered": 0,
     "runDistance": 0,
+    "walkDistance": 0,
     "rideDistance": 0,
     "activities": 0
   },
@@ -66,6 +75,7 @@
     "name": "Deep Sanghani",
     "distanceCovered": 20.31,
     "runDistance": 20.31,
+    "walkDistance": 0,
     "rideDistance": 0,
     "activities": 2
   },
@@ -73,6 +83,7 @@
     "name": "Tashif",
     "distanceCovered": 0,
     "runDistance": 0,
+    "walkDistance": 0,
     "rideDistance": 0,
     "activities": 0
   },
@@ -80,6 +91,7 @@
     "name": "Anil Yaduvanshi",
     "distanceCovered": 176.44,
     "runDistance": 35.55,
+    "walkDistance": 0,
     "rideDistance": 140.89,
     "activities": 12
   },
@@ -87,6 +99,7 @@
     "name": "Pradhyumn Jain",
     "distanceCovered": 87.23,
     "runDistance": 57.31,
+    "walkDistance": 0,
     "rideDistance": 29.92,
     "activities": 8
   },
@@ -94,6 +107,7 @@
     "name": "Prachi Yadav",
     "distanceCovered": 46.64,
     "runDistance": 46.64,
+    "walkDistance": 0,
     "rideDistance": 0,
     "activities": 8
   },
@@ -101,6 +115,7 @@
     "name": "Anukulya Panda",
     "distanceCovered": 0,
     "runDistance": 0,
+    "walkDistance": 0,
     "rideDistance": 0,
     "activities": 0
   }

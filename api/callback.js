@@ -65,6 +65,7 @@ export default async function handler(req, res) {
     // Calculate distances
     let runDistance = 0;
     let rideDistance = 0;
+    let walkDistance = 0;
     let totalActivities = 0;
 
     for (const activity of allActivities) {
@@ -77,10 +78,13 @@ export default async function handler(req, res) {
       } else if (type === 'Ride' || type === 'VirtualRide') {
         rideDistance += distKm;
         totalActivities++;
+      } else if (type === 'Walk' || type === 'Hike') {
+        walkDistance += distKm;
+        totalActivities++;
       }
     }
 
-    const totalDistance = runDistance + rideDistance;
+    const totalDistance = runDistance + rideDistance + walkDistance;
 
     // Store the data using Vercel KV (or a JSON blob store)
     // For simplicity, we'll use the Vercel Blob store or write to a GitHub file
@@ -91,7 +95,8 @@ export default async function handler(req, res) {
     if (githubToken) {
       await updateGitHubData(githubToken, participantName, {
         distanceCovered: Math.round(totalDistance * 100) / 100,
-        runDistance: Math.round(runDistance * 100) / 100,
+        runDistance: Math.round((runDistance + walkDistance) * 100) / 100,
+        walkDistance: Math.round(walkDistance * 100) / 100,
         rideDistance: Math.round(rideDistance * 100) / 100,
         activities: totalActivities,
       });
@@ -122,6 +127,7 @@ export default async function handler(req, res) {
       name: participantName,
       athlete: athleteName,
       run: runDistance.toFixed(1),
+      walk: walkDistance.toFixed(1),
       ride: rideDistance.toFixed(1),
       total: totalDistance.toFixed(1),
       activities: totalActivities.toString(),
@@ -158,6 +164,7 @@ async function updateGitHubData(token, participantName, newData) {
     if (entry) {
       entry.distanceCovered = newData.distanceCovered;
       entry.runDistance = newData.runDistance;
+      entry.walkDistance = newData.walkDistance || 0;
       entry.rideDistance = newData.rideDistance;
       entry.activities = newData.activities;
     }

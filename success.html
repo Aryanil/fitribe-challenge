@@ -92,6 +92,10 @@
                 <span class="stat-value" id="run-dist">--</span>
             </div>
             <div class="stat-row">
+                <span class="stat-label">Walking/Hiking</span>
+                <span class="stat-value" id="walk-dist">--</span>
+            </div>
+            <div class="stat-row">
                 <span class="stat-label">Cycling</span>
                 <span class="stat-value" id="ride-dist">--</span>
             </div>
@@ -118,6 +122,7 @@
         document.getElementById('participant-name').textContent = params.get('name') || 'Athlete';
         document.getElementById('strava-athlete').textContent = params.get('athlete') || '';
         document.getElementById('run-dist').textContent = (params.get('run') || '0') + ' km';
+        document.getElementById('walk-dist').textContent = (params.get('walk') || '0') + ' km';
         document.getElementById('ride-dist').textContent = (params.get('ride') || '0') + ' km';
         document.getElementById('total-dist').textContent = (params.get('total') || '0') + ' km';
         document.getElementById('activities').textContent = params.get('activities') || '0';

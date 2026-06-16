@@ -11,6 +11,7 @@
             --primary-dark: #E34402;
             --cycling: #2196F3;
             --running: #4CAF50;
+            --walking: #FF9800;
             --double: #9C27B0;
             --bg: #0f0f0f;
             --card-bg: #1a1a1a;
@@ -274,6 +275,7 @@
         }
 
         .progress-fill.running { background: linear-gradient(90deg, var(--running), #81C784); }
+        .progress-fill.walking { background: linear-gradient(90deg, var(--walking), #FFB74D); }
         .progress-fill.cycling { background: linear-gradient(90deg, var(--cycling), #64B5F6); }
         .progress-fill.double { background: linear-gradient(90deg, var(--double), #BA68C8); }
 
@@ -487,6 +489,7 @@
         <div class="tabs">
             <div class="tab active" onclick="switchTab('all')">All <span class="tab-count">15</span></div>
             <div class="tab" onclick="switchTab('running')">Running <span class="tab-count">11</span></div>
+            <div class="tab" onclick="switchTab('walking')">Walking <span class="tab-count">--</span></div>
             <div class="tab" onclick="switchTab('cycling')">Cycling <span class="tab-count">1</span></div>
             <div class="tab" onclick="switchTab('double')">Double Trouble <span class="tab-count">3</span></div>
         </div>
@@ -516,6 +519,20 @@
                     <span>Strava</span>
                 </div>
                 <div id="rows-running"></div>
+            </div>
+        </div>
+
+        <!-- Leaderboard: Walking -->
+        <div class="leaderboard" id="leaderboard-walking">
+            <div class="leaderboard-card">
+                <div class="leaderboard-header">
+                    <span>Rank</span>
+                    <span>Participant</span>
+                    <span>Distance</span>
+                    <span>Progress</span>
+                    <span>Strava</span>
+                </div>
+                <div id="rows-walking"></div>
             </div>
         </div>
 
@@ -773,13 +790,20 @@
         }
 
         function createParticipantRow(participant, rank, challengeType) {
-            const progressPercent = Math.min(100, (participant.distanceCovered / participant.targetKm) * 100);
-            const rankClass = rank <= 3 ? `rank-${rank}` : '';
-
+            let displayDistance = participant.distanceCovered;
             let distanceDisplay = `${participant.distanceCovered.toFixed(1)} km`;
-            if (challengeType === 'double') {
+
+            if (challengeType === 'walking') {
+                displayDistance = participant.walkDistance || 0;
+                distanceDisplay = `${displayDistance.toFixed(1)} km`;
+            } else if (challengeType === 'double') {
                 distanceDisplay = `${(participant.runDistance || 0).toFixed(1)} + ${(participant.rideDistance || 0).toFixed(1)} km`;
             }
+
+            const progressPercent = challengeType === 'walking'
+                ? Math.min(100, (displayDistance / participant.targetKm) * 100)
+                : Math.min(100, (participant.distanceCovered / participant.targetKm) * 100);
+            const rankClass = rank <= 3 ? `rank-${rank}` : '';
 
             return `
                 <div class="participant-row">
@@ -813,24 +837,39 @@
             // Sort all participants by distance (descending)
             const allSorted = [...participants].sort((a, b) => b.distanceCovered - a.distanceCovered);
             const runningSorted = participants.filter(p => p.challenge === 'running').sort((a, b) => b.distanceCovered - a.distanceCovered);
+            // Walking tab: show participants who have recorded walk/hike activities
+            const walkingSorted = participants.filter(p => (p.walkDistance || 0) > 0).sort((a, b) => (b.walkDistance || 0) - (a.walkDistance || 0));
             const cyclingSorted = participants.filter(p => p.challenge === 'cycling').sort((a, b) => b.distanceCovered - a.distanceCovered);
             const doubleSorted = participants.filter(p => p.challenge === 'double').sort((a, b) => b.distanceCovered - a.distanceCovered);
 
             // Render All
-            document.getElementById('rows-all').innerHTML = allSorted
-                .map((p, i) => createParticipantRow(p, i + 1)).join('');
+            const rowsAll = document.getElementById('rows-all');
+            rowsAll.textContent = '';
+            rowsAll.insertAdjacentHTML('beforeend', allSorted.map((p, i) => createParticipantRow(p, i + 1)).join(''));
 
-            // Render Running
-            document.getElementById('rows-running').innerHTML = runningSorted
-                .map((p, i) => createParticipantRow(p, i + 1, 'running')).join('');
+            // Render Running (walk distance counts towards running challenge)
+            const rowsRunning = document.getElementById('rows-running');
+            rowsRunning.textContent = '';
+            rowsRunning.insertAdjacentHTML('beforeend', runningSorted.map((p, i) => createParticipantRow(p, i + 1, 'running')).join(''));
+
+            // Render Walking
+            const rowsWalking = document.getElementById('rows-walking');
+            rowsWalking.textContent = '';
+            if (walkingSorted.length > 0) {
+                rowsWalking.insertAdjacentHTML('beforeend', walkingSorted.map((p, i) => createParticipantRow(p, i + 1, 'walking')).join(''));
+            } else {
+                rowsWalking.insertAdjacentHTML('beforeend', '<div style="padding:30px;text-align:center;color:#888;">No walk activities recorded yet</div>');
+            }
 
             // Render Cycling
-            document.getElementById('rows-cycling').innerHTML = cyclingSorted
-                .map((p, i) => createParticipantRow(p, i + 1, 'cycling')).join('');
+            const rowsCycling = document.getElementById('rows-cycling');
+            rowsCycling.textContent = '';
+            rowsCycling.insertAdjacentHTML('beforeend', cyclingSorted.map((p, i) => createParticipantRow(p, i + 1, 'cycling')).join(''));
 
             // Render Double Trouble
-            document.getElementById('rows-double').innerHTML = doubleSorted
-                .map((p, i) => createParticipantRow(p, i + 1, 'double')).join('');
+            const rowsDouble = document.getElementById('rows-double');
+            rowsDouble.textContent = '';
+            rowsDouble.insertAdjacentHTML('beforeend', doubleSorted.map((p, i) => createParticipantRow(p, i + 1, 'double')).join(''));
 
             // Update stats
             const totalDistance = participants.reduce((sum, p) => sum + p.distanceCovered, 0);
@@ -863,9 +902,12 @@
                         const participant = participants.find(p => p.name === entry.name);
                         if (participant) {
                             participant.distanceCovered = entry.distanceCovered || 0;
+                            participant.walkDistance = entry.walkDistance || 0;
                             if (participant.challenge === 'double') {
                                 participant.runDistance = entry.runDistance || 0;
                                 participant.rideDistance = entry.rideDistance || 0;
+                            } else {
+                                participant.runDistance = entry.runDistance || 0;
                             }
                         }
                     });
