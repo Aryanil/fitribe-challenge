@@ -17,8 +17,8 @@
   },
   {
     "name": "Dhvani Arora",
-    "distanceCovered": 35,
-    "runDistance": 35,
+    "distanceCovered": 39.2,
+    "runDistance": 39.2,
     "walkDistance": 0,
     "rideDistance": 0,
     "activities": 0
@@ -49,9 +49,9 @@
   },
   {
     "name": "Narayanan Saranyan",
-    "distanceCovered": 23.1,
-    "runDistance": 23.1,
-    "walkDistance": 23.1,
+    "distanceCovered": 25.5,
+    "runDistance": 25.5,
+    "walkDistance": 25.5,
     "rideDistance": 0,
     "activities": 0
   },
@@ -65,8 +65,8 @@
   },
   {
     "name": "Gaurav Goyal",
-    "distanceCovered": 72.8,
-    "runDistance": 72.8,
+    "distanceCovered": 91,
+    "runDistance": 91,
     "walkDistance": 0,
     "rideDistance": 0,
     "activities": 0
@@ -113,10 +113,18 @@
   },
   {
     "name": "Anukulya Panda",
-    "distanceCovered": 86.6,
-    "runDistance": 86.6,
+    "distanceCovered": 106.6,
+    "runDistance": 106.6,
     "walkDistance": 0,
     "rideDistance": 0,
+    "activities": 0
+  },
+  {
+    "name": "Vaibhav Saxena",
+    "distanceCovered": 199.2,
+    "runDistance": 0,
+    "walkDistance": 0,
+    "rideDistance": 199.2,
     "activities": 0
   }
 ]
