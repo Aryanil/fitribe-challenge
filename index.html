@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitribe June Challenge - Leaderboard</title>
+    <title>Fitribe July Challenge - Leaderboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -460,15 +460,15 @@
         <!-- Header -->
         <div class="header">
             <img src="fitribe-logo.png" alt="Fitribe" class="header-logo">
-            <h1>June Challenge 2026</h1>
+            <h1>July Challenge 2026</h1>
             <p>Run. Ride. Conquer.</p>
-            <div class="challenge-period">June 1 - June 30, 2026</div>
+            <div class="challenge-period">July 1 - July 31, 2026</div>
         </div>
 
         <!-- Stats -->
         <div class="stats-row">
             <div class="stat-card">
-                <div class="stat-value" id="total-participants">16</div>
+                <div class="stat-value" id="total-participants">14</div>
                 <div class="stat-label">Participants</div>
             </div>
             <div class="stat-card">
@@ -487,11 +487,11 @@
 
         <!-- Tabs -->
         <div class="tabs">
-            <div class="tab active" onclick="switchTab('all')">All <span class="tab-count">16</span></div>
-            <div class="tab" onclick="switchTab('running')">Running <span class="tab-count">11</span></div>
+            <div class="tab active" onclick="switchTab('all')">All <span class="tab-count">14</span></div>
+            <div class="tab" onclick="switchTab('running')">Running <span class="tab-count">12</span></div>
             <div class="tab" onclick="switchTab('walking')">Walking <span class="tab-count">--</span></div>
-            <div class="tab" onclick="switchTab('cycling')">Cycling <span class="tab-count">1</span></div>
-            <div class="tab" onclick="switchTab('double')">Double Trouble <span class="tab-count">3</span></div>
+            <div class="tab" onclick="switchTab('cycling')">Cycling <span class="tab-count">2</span></div>
+            <div class="tab" onclick="switchTab('double')">Double Trouble <span class="tab-count">0</span></div>
         </div>
 
         <!-- Leaderboard: All -->
@@ -607,158 +607,92 @@
         // ============================================
         const participants = [
             {
-                name: "Pankaj Arora",
-                gender: "Male",
-                challenge: "cycling",
-                targetKm: 1000,
-                targetLabel: "Everest Challenge - 1000 KM",
-                stravaLink: "https://strava.app.link/aPPhuQKVt3b",
-                stravaId: null, // Will be populated after OAuth
-                distanceCovered: 0,
-            },
-            {
-                name: "Ashmeta S Sahu",
-                gender: "Female",
-                challenge: "double",
-                targetKm: 150, // 50km run + 100km cycle
-                targetLabel: "50KM Run + 100KM Cycle",
-                stravaLink: "https://www.strava.com/athletes/ashmita_sahu",
-                stravaId: null,
-                distanceCovered: 0,
-                runDistance: 0,
-                rideDistance: 0,
-            },
-            {
-                name: "Dhvani Arora",
-                gender: "Female",
-                challenge: "running",
-                targetKm: 50,
-                targetLabel: "Chembra Peak - 50 KM",
-                stravaLink: "https://strava.app.link/7MrlQWVHA3b",
-                stravaId: null,
-                distanceCovered: 0,
-            },
-            {
-                name: "Janvi Arora",
-                gender: "Female",
-                challenge: "running",
-                targetKm: 50,
-                targetLabel: "Chembra Peak - 50 KM",
-                stravaLink: "https://strava.app.link/JLJgbADQA3b",
-                stravaId: null,
-                distanceCovered: 0,
-            },
-            {
-                name: "Arun Kumar",
-                gender: "Male",
-                challenge: "double",
-                targetKm: 250, // 50km run + 200km cycle
-                targetLabel: "K2 Challenge - 50KM Run + 200KM Cycle",
-                stravaLink: "https://strava.app.link/BqS0BVOUA3b",
-                stravaId: null,
-                distanceCovered: 0,
-                runDistance: 0,
-                rideDistance: 0,
-            },
-            {
-                name: "Anupama Bankapur",
-                gender: "Female",
-                challenge: "running",
-                targetKm: 50,
-                targetLabel: "Chembra Peak - 50 KM",
-                stravaLink: "https://strava.app.link/Hxk6y27JB3b",
-                stravaId: null,
-                distanceCovered: 0,
-            },
-            {
-                name: "Narayanan Saranyan",
+                name: "Pradhyumn Jain",
                 gender: "Male",
                 challenge: "running",
-                targetKm: 30,
-                targetLabel: "30 KM",
-                stravaLink: "https://strava.app.link/iI0VxfMsC3b",
-                stravaId: null,
+                targetKm: 150,
+                targetLabel: "Madagascar Explorer - 150 KM",
+                stravaLink: "https://www.strava.com/athletes/95221431",
+                stravaId: 95221431,
                 distanceCovered: 0,
             },
             {
                 name: "Vandana Wadhawan",
                 gender: "Female",
                 challenge: "running",
-                targetKm: 30,
-                targetLabel: "Nandi Hills - 30 KM",
-                stravaLink: "https://strava.app.link/HTLL1a7DF3b",
+                targetKm: 50,
+                targetLabel: "Bali Explorer - 50 KM",
+                stravaLink: "https://strava.app.link/ohtgDyvNu4b",
                 stravaId: null,
                 distanceCovered: 0,
             },
             {
-                name: "Gaurav Goyal",
-                gender: "Male",
-                challenge: "running",
-                targetKm: 100,
-                targetLabel: "Anamudi - 100 KM",
-                stravaLink: "https://strava.app.link/64AVrsXcH3b",
-                stravaId: null,
-                distanceCovered: 0,
-            },
-            {
-                name: "Deep Sanghani",
-                gender: "Male",
-                challenge: "running",
-                targetKm: 100,
-                targetLabel: "Anamudi - 100 KM",
-                stravaLink: "https://strava.app.link/buO9WFuSJ3b",
-                stravaId: null,
-                distanceCovered: 0,
-            },
-            {
-                name: "Tashif",
+                name: "Tashif Ayaz",
                 gender: "Male",
                 challenge: "running",
                 targetKm: 50,
-                targetLabel: "Chembra Peak - 50 KM",
-                stravaLink: "https://strava.app.link/OY7JYRxjR3b",
+                targetLabel: "Bali Explorer - 50 KM",
+                stravaLink: "https://strava.app.link/leQ0gZvNu4b",
                 stravaId: null,
                 distanceCovered: 0,
             },
             {
-                name: "Anil Yaduvanshi",
-                gender: "Male",
-                challenge: "double",
-                targetKm: 250, // 50km run + 200km cycle
-                targetLabel: "K2 Challenge - 50KM Run + 200KM Cycle",
-                stravaLink: "https://www.strava.com/athletes/77481913",
-                stravaId: 77481913,
-                distanceCovered: 0,
-                runDistance: 0,
-                rideDistance: 0,
-            },
-            {
-                name: "Pradhyumn Jain",
+                name: "Ashwith Pai",
                 gender: "Male",
                 challenge: "running",
-                targetKm: 100,
-                targetLabel: "Anamudi - 100 KM",
-                stravaLink: "https://www.strava.com/athletes/95221431",
-                stravaId: 95221431,
+                targetKm: 150,
+                targetLabel: "Madagascar Explorer - 150 KM",
+                stravaLink: "https://strava.app.link/s1xVTDgPu4b",
+                stravaId: null,
                 distanceCovered: 0,
             },
             {
                 name: "Prachi Yadav",
                 gender: "Female",
                 challenge: "running",
-                targetKm: 50,
-                targetLabel: "Chembra Peak - 50 KM",
+                targetKm: 100,
+                targetLabel: "Santorini Explorer - 100 KM",
                 stravaLink: "https://www.strava.com/athletes/90092119",
                 stravaId: 90092119,
+                distanceCovered: 0,
+            },
+            {
+                name: "H R Srivatsa",
+                gender: "Male",
+                challenge: "running",
+                targetKm: 30,
+                targetLabel: "Havelock Island Explorer - 30 KM",
+                stravaLink: "https://www.strava.com/clubs/1656153",
+                stravaId: null,
                 distanceCovered: 0,
             },
             {
                 name: "Anukulya Panda",
                 gender: "Female",
                 challenge: "running",
+                targetKm: 100,
+                targetLabel: "Santorini Explorer - 100 KM",
+                stravaLink: "https://www.strava.com/clubs/1656153",
+                stravaId: null,
+                distanceCovered: 0,
+            },
+            {
+                name: "Avinash Chandra",
+                gender: "Male",
+                challenge: "running",
+                targetKm: 50,
+                targetLabel: "Bali Explorer - 50 KM",
+                stravaLink: "https://strava.app.link/biWXJp5Rw4b",
+                stravaId: null,
+                distanceCovered: 0,
+            },
+            {
+                name: "Aarthi Saranyan",
+                gender: "Female",
+                challenge: "running",
                 targetKm: 30,
-                targetLabel: "Nandi Hills - 30 KM",
-                stravaLink: "https://strava.app.link/0voKN4Y8Y3b",
+                targetLabel: "Havelock Island Explorer - 30 KM",
+                stravaLink: "https://strava.app.link/VHMUJ22Vw4b",
                 stravaId: null,
                 distanceCovered: 0,
             },
@@ -767,8 +701,48 @@
                 gender: "Male",
                 challenge: "cycling",
                 targetKm: 300,
-                targetLabel: "Nilgiri Challenge - 300 KM",
-                stravaLink: "https://strava.app.link/4Mr2g1F8l4b",
+                targetLabel: "Iceland Explorer - 300 KM",
+                stravaLink: "https://strava.app.link/N37uKYDZw4b",
+                stravaId: null,
+                distanceCovered: 0,
+            },
+            {
+                name: "Janvi Arora",
+                gender: "Female",
+                challenge: "running",
+                targetKm: 50,
+                targetLabel: "Bali Explorer - 50 KM",
+                stravaLink: "https://strava.app.link/I5h7Y8h0w4b",
+                stravaId: null,
+                distanceCovered: 0,
+            },
+            {
+                name: "Pankaj Arora",
+                gender: "Male",
+                challenge: "cycling",
+                targetKm: 1000,
+                targetLabel: "Australia Crossing - 1000 KM",
+                stravaLink: "https://strava.com/athletes/38180201",
+                stravaId: 38180201,
+                distanceCovered: 0,
+            },
+            {
+                name: "Praseed",
+                gender: "Male",
+                challenge: "running",
+                targetKm: 200,
+                targetLabel: "Borneo Explorer - 200 KM",
+                stravaLink: "https://www.strava.com/clubs/1656153",
+                stravaId: null,
+                distanceCovered: 0,
+            },
+            {
+                name: "Anupama Bankapur",
+                gender: "Female",
+                challenge: "running",
+                targetKm: 50,
+                targetLabel: "Bali Explorer - 50 KM",
+                stravaLink: "https://strava.app.link/dOUNHVNeA4b",
                 stravaId: null,
                 distanceCovered: 0,
             },
@@ -887,7 +861,7 @@
 
             // Days remaining
             const now = new Date();
-            const endDate = new Date('2026-06-30');
+            const endDate = new Date('2026-07-31');
             const daysRemaining = Math.max(0, Math.ceil((endDate - now) / (1000 * 60 * 60 * 24)));
             document.getElementById('days-remaining').textContent = daysRemaining;
 
