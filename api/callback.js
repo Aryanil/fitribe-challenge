@@ -40,9 +40,9 @@ export default async function handler(req, res) {
     const athleteId = tokenData.athlete?.id;
     const athleteName = `${tokenData.athlete?.firstname || ''} ${tokenData.athlete?.lastname || ''}`.trim();
 
-    // Fetch June 2026 activities
-    const afterEpoch = Math.floor(new Date('2026-06-01T00:00:00Z').getTime() / 1000);
-    const beforeEpoch = Math.floor(new Date('2026-06-30T23:59:59Z').getTime() / 1000);
+    // Fetch July 2026 activities
+    const afterEpoch = Math.floor(new Date('2026-07-01T00:00:00Z').getTime() / 1000);
+    const beforeEpoch = Math.floor(new Date('2026-07-31T23:59:59Z').getTime() / 1000);
 
     let allActivities = [];
     let page = 1;
