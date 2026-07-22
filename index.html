@@ -488,8 +488,7 @@
         <!-- Tabs -->
         <div class="tabs">
             <div class="tab active" onclick="switchTab('all')">All <span class="tab-count">15</span></div>
-            <div class="tab" onclick="switchTab('running')">Running <span class="tab-count">13</span></div>
-            <div class="tab" onclick="switchTab('walking')">Walking <span class="tab-count">--</span></div>
+            <div class="tab" onclick="switchTab('running')">Running/Walking <span class="tab-count">13</span></div>
             <div class="tab" onclick="switchTab('cycling')">Cycling <span class="tab-count">2</span></div>
             <div class="tab" onclick="switchTab('double')">Double Trouble <span class="tab-count">0</span></div>
         </div>
@@ -519,20 +518,6 @@
                     <span>Strava</span>
                 </div>
                 <div id="rows-running"></div>
-            </div>
-        </div>
-
-        <!-- Leaderboard: Walking -->
-        <div class="leaderboard" id="leaderboard-walking">
-            <div class="leaderboard-card">
-                <div class="leaderboard-header">
-                    <span>Rank</span>
-                    <span>Participant</span>
-                    <span>Distance</span>
-                    <span>Progress</span>
-                    <span>Strava</span>
-                </div>
-                <div id="rows-walking"></div>
             </div>
         </div>
 
@@ -782,19 +767,13 @@
         }
 
         function createParticipantRow(participant, rank, challengeType) {
-            let displayDistance = participant.distanceCovered;
             let distanceDisplay = `${participant.distanceCovered.toFixed(1)} km`;
 
-            if (challengeType === 'walking') {
-                displayDistance = participant.walkDistance || 0;
-                distanceDisplay = `${displayDistance.toFixed(1)} km`;
-            } else if (challengeType === 'double') {
+            if (challengeType === 'double') {
                 distanceDisplay = `${(participant.runDistance || 0).toFixed(1)} + ${(participant.rideDistance || 0).toFixed(1)} km`;
             }
 
-            const progressPercent = challengeType === 'walking'
-                ? Math.min(100, (displayDistance / participant.targetKm) * 100)
-                : Math.min(100, (participant.distanceCovered / participant.targetKm) * 100);
+            const progressPercent = Math.min(100, (participant.distanceCovered / participant.targetKm) * 100);
             const rankClass = rank <= 3 ? `rank-${rank}` : '';
 
             return `
@@ -829,8 +808,6 @@
             // Sort all participants by distance (descending)
             const allSorted = [...participants].sort((a, b) => b.distanceCovered - a.distanceCovered);
             const runningSorted = participants.filter(p => p.challenge === 'running').sort((a, b) => b.distanceCovered - a.distanceCovered);
-            // Walking tab: show participants who have recorded walk/hike activities
-            const walkingSorted = participants.filter(p => (p.walkDistance || 0) > 0).sort((a, b) => (b.walkDistance || 0) - (a.walkDistance || 0));
             const cyclingSorted = participants.filter(p => p.challenge === 'cycling').sort((a, b) => b.distanceCovered - a.distanceCovered);
             const doubleSorted = participants.filter(p => p.challenge === 'double').sort((a, b) => b.distanceCovered - a.distanceCovered);
 
@@ -839,19 +816,10 @@
             rowsAll.textContent = '';
             rowsAll.insertAdjacentHTML('beforeend', allSorted.map((p, i) => createParticipantRow(p, i + 1)).join(''));
 
-            // Render Running (walk distance counts towards running challenge)
+            // Render Running/Walking (walk distance counts towards running challenge)
             const rowsRunning = document.getElementById('rows-running');
             rowsRunning.textContent = '';
             rowsRunning.insertAdjacentHTML('beforeend', runningSorted.map((p, i) => createParticipantRow(p, i + 1, 'running')).join(''));
-
-            // Render Walking
-            const rowsWalking = document.getElementById('rows-walking');
-            rowsWalking.textContent = '';
-            if (walkingSorted.length > 0) {
-                rowsWalking.insertAdjacentHTML('beforeend', walkingSorted.map((p, i) => createParticipantRow(p, i + 1, 'walking')).join(''));
-            } else {
-                rowsWalking.insertAdjacentHTML('beforeend', '<div style="padding:30px;text-align:center;color:#888;">No walk activities recorded yet</div>');
-            }
 
             // Render Cycling
             const rowsCycling = document.getElementById('rows-cycling');
