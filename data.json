@@ -5,7 +5,7 @@
     "runDistance": 90.5,
     "walkDistance": 0,
     "rideDistance": 0,
-    "activities": 0
+    "activities": 10
   },
   {
     "name": "Vandana Wadhawan",
@@ -93,7 +93,7 @@
     "runDistance": 0,
     "walkDistance": 0,
     "rideDistance": 595.3,
-    "activities": 0
+    "activities": 9
   },
   {
     "name": "Praseed",
@@ -109,6 +109,6 @@
     "runDistance": 82.6,
     "walkDistance": 0,
     "rideDistance": 0,
-    "activities": 0
+    "activities": 11
   }
 ]
